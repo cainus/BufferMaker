@@ -1,5 +1,5 @@
 require('should');
-var BufferMaker = require('../Buffermaker');
+var BufferMaker = require('../index');
 
 describe("BufferMaker", function(){
   it("can create a one byte buffer", function(){
