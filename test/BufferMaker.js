@@ -26,4 +26,11 @@ describe("BufferMaker", function(){
     var actual = new BufferMaker().string("12345678").make();
     actual.should.eql(buffer);
   });
+  it("can create a buffer from a buffer", function(){
+    var buffer = new Buffer(8);
+    buffer.write("12345678");
+    var expected = new BufferMaker().string(buffer).make();
+    var actual = new BufferMaker().string("12345678").make();
+    actual.should.eql(expected);
+  });
 });

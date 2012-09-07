@@ -53,7 +53,15 @@ BufferMaker.prototype.make = function(){
         }
         offset += 8;
         break;
-      case "string": buffer.write(item.value, offset); offset += item.value.length; break;
+      case "string": 
+        if (typeof item.value === 'string'){
+          buffer.write(item.value, offset);
+        } else {
+          item.value.copy(buffer, 0, offset);
+        }
+        offset += item.value.length;
+
+        break;
     }
   });
   return buffer;
