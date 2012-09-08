@@ -56,10 +56,11 @@ BufferMaker.prototype.make = function(){
       case "string": 
         if (typeof item.value === 'string'){
           buffer.write(item.value, offset);
+          offset += Buffer.byteLength(item.value);
         } else {
           item.value.copy(buffer, 0, offset);
+          offset += item.value.length;
         }
-        offset += item.value.length;
 
         break;
     }
