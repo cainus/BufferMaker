@@ -8,16 +8,23 @@ describe("BufferMaker", function(){
     var actual = new BufferMaker().UInt8(5).make();
     actual.should.eql(buffer);
   });
-  it("can create a two-byte buffer", function(){
+  it("can create a two-byte (16-bit) buffer", function(){
     var buffer = new Buffer(2);
     buffer.writeUInt16BE(5,0);
     var actual = new BufferMaker().UInt16BE(5).make();
     actual.should.eql(buffer);
   });
-  it("can create a four-byte buffer", function(){
+  it("can create a four-byte (32-bit) buffer", function(){
     var buffer = new Buffer(4);
     buffer.writeUInt32BE(5,0);
     var actual = new BufferMaker().UInt32BE(5).make();
+    actual.should.eql(buffer);
+  });
+  it("can create an eight-byte (64-bit) buffer", function(){
+    var buffer = new Buffer(8);
+    buffer.writeUInt32BE(0,0);
+    buffer.writeUInt32BE(5,4);
+    var actual = new BufferMaker().UInt64BE(5).make();
     actual.should.eql(buffer);
   });
   it("can create a buffer from a string", function(){
@@ -43,8 +50,6 @@ describe("BufferMaker", function(){
                   .string(encodedMessage)
                   .make();
     messageSet.should.eql(new Buffer([0, 0, 0, 4, 'f'.charCodeAt(0), 'o'.charCodeAt(0), 'u'.charCodeAt(0), 'r'.charCodeAt(0)]));
-
-  
   });
 
 

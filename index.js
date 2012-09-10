@@ -1,5 +1,4 @@
 var bignum = require('bignum');
-var _ = require('underscore');
 
 var BufferMaker = function(){
   this.plan = [];
@@ -31,7 +30,10 @@ BufferMaker.prototype.string = function(val){
 BufferMaker.prototype.make = function(){
   var bytecount = 0;
   var offset = 0;
-  _.each(this.plan, function(item){
+  var item;
+  var i, j = 0;
+  for(i = 0; i < this.plan.length; i++){
+    item = this.plan[i];
     switch(item.type){
       case "UInt8": bytecount += 1; break;
       case "UInt16BE": bytecount += 2; break;
@@ -39,17 +41,18 @@ BufferMaker.prototype.make = function(){
       case "UInt64BE": bytecount += 8; break;
       case "string": bytecount += item.value.length; break;
     }
-  });
+  }
   var buffer = new Buffer(bytecount);
-  _.each(this.plan, function(item){
+  for(i = 0; i < this.plan.length; i++){
+    item = this.plan[i];
     switch(item.type){
       case "UInt8": buffer.writeUInt8(item.value, offset); offset += 1; break;
       case "UInt16BE": buffer.writeUInt16BE(item.value, offset); offset += 2; break;
       case "UInt32BE": buffer.writeUInt32BE(item.value, offset); offset += 4; break;
       case "UInt64BE":
         var bit64Buffer = item.value.toBuffer({endian : "big", size : 8});
-        for(var i = 0; i < bit64Buffer.length; i++){
-          buffer[offset + i] = bit64Buffer[i];
+        for(j = 0; j < bit64Buffer.length; j++){
+          buffer[offset + j] = bit64Buffer[j];
         }
         offset += 8;
         break;
@@ -64,7 +67,7 @@ BufferMaker.prototype.make = function(){
 
         break;
     }
-  });
+  }
   return buffer;
 
 };
