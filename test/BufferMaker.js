@@ -33,4 +33,19 @@ describe("BufferMaker", function(){
     var actual = new BufferMaker().string("12345678").make();
     actual.should.eql(expected);
   });
+
+
+  it ("can create a buffer from a binary string", function(){
+    var messageSetBufferMaker = new BufferMaker();
+    var encodedMessage = new Buffer("four");
+    var messageSet = messageSetBufferMaker
+                  .UInt32BE(encodedMessage.length)
+                  .string(encodedMessage)
+                  .make();
+    messageSet.should.eql(new Buffer([0, 0, 0, 4, 'f'.charCodeAt(0), 'o'.charCodeAt(0), 'u'.charCodeAt(0), 'r'.charCodeAt(0)]));
+
+  
+  });
+
+
 });

@@ -58,7 +58,7 @@ BufferMaker.prototype.make = function(){
           buffer.write(item.value, offset);
           offset += Buffer.byteLength(item.value);
         } else {
-          item.value.copy(buffer, 0, offset);
+          item.value.copy(buffer, offset, 0);
           offset += item.value.length;
         }
 
