@@ -26,7 +26,6 @@ var someBuffer = new BufferMaker()
 // <Buffer 01 00 02 00 00 00 03 00 00 00 00 00 00 00 04> 
 
 // others...
-var someBuffer = new BufferMaker().UInt16LE(1).UInt32LE(2).Int16LE(3).Int32LE(4).FloatLE(5).FloatBE(6).DoubleLE(7).DoubleBE(8).make();
 var someBuffer = new BufferMaker()
                     .UInt16LE(1)
                     .UInt32LE(2)
