@@ -6,19 +6,17 @@ A convenient way of creating binary strings in node.js because Buffer is a bit t
 Examples:  
 
 ```javascript
-// signed varieties
+// unsigned varieties
 var someBuffer = new BufferMaker()
                         .UInt8(1)
                         .UInt16BE(2)
                         .UInt32BE(3)
-                        .UInt64BE(4)
+                        .Int64BE(4)     // uses the BigNum library
                         .string("this is a test!")
                         .make();
 //  <Buffer 01 00 02 00 00 00 03 00 00 00 00 00 00 00 04 74 68 69 73 20 69 73 20 61 20 74 65 73 74 21>
-```
 
-```javascript
-// unsigned are also supported:
+// signed are also supported:
 var someBuffer = new BufferMaker()
                         .Int8(1)
                         .Int16BE(2)
@@ -26,20 +24,18 @@ var someBuffer = new BufferMaker()
                         .Int64BE(4)
                         .make();
 // <Buffer 01 00 02 00 00 00 03 00 00 00 00 00 00 00 04> 
-```
 
-
-
-
-Missing these methods (but taking pull requests!):
-```javascript
-UInt16LE(value)
-UInt32LE(value)
-Int16LE(value)
-Int32LE(value)
-FloatLE(value)
-FloatBE(value)
-DoubleLE(value)
-DoubleBE(value)
-UInt64LE()
+// others...
+var someBuffer = new BufferMaker().UInt16LE(1).UInt32LE(2).Int16LE(3).Int32LE(4).FloatLE(5).FloatBE(6).DoubleLE(7).DoubleBE(8).make();
+var someBuffer = new BufferMaker()
+                    .UInt16LE(1)
+                    .UInt32LE(2)
+                    .Int16LE(3)
+                    .Int32LE(4)
+                    .FloatLE(5)
+                    .FloatBE(6)
+                    .DoubleLE(7)
+                    .DoubleBE(8)
+                    .make();
+// <Buffer 01 00 02 00 00 00 03 00 04 00 00 00 00 00 a0 40 40 c0 00 00 00 00 00 00 00 00 1c 40 40 20 00 00 00 00 00 00>
 ```

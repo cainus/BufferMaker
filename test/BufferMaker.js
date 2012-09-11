@@ -2,8 +2,67 @@ require('should');
 var BufferMaker = require('../index');
 
 describe("BufferMaker", function(){
-  
+
+  describe("when used for little endian scenarios", function(){
+    describe("when used for non integers", function(){
+      it ("can create floats", function(){
+        var buffer = new Buffer(4);
+        buffer.writeFloatLE(0xcafebabe,0);
+        var actual = new BufferMaker().FloatLE(0xcafebabe).make();
+        actual.should.eql(buffer);
+      });
+      it ("can create doubles", function(){
+        var buffer = new Buffer(8);
+        buffer.writeDoubleLE(0xcafebabe,0);
+        var actual = new BufferMaker().DoubleLE(0xcafebabe).make();
+        actual.should.eql(buffer);
+      });
+    });
+    describe("when used for unsigned integers", function(){
+      it("can create a two-byte (16-bit) buffer", function(){
+        var buffer = new Buffer(2);
+        buffer.writeUInt16LE(5,0);
+        var actual = new BufferMaker().UInt16LE(5).make();
+        actual.should.eql(buffer);
+      });
+      it("can create a four-byte (32-bit) buffer", function(){
+        var buffer = new Buffer(4);
+        buffer.writeUInt32LE(5,0);
+        var actual = new BufferMaker().UInt32LE(5).make();
+        actual.should.eql(buffer);
+      });
+
+    });
+    describe("when used for signed integers", function(){
+      it("can create a two-byte (16-bit) buffer", function(){
+        var buffer = new Buffer(2);
+        buffer.writeInt16LE(5,0);
+        var actual = new BufferMaker().Int16LE(5).make();
+        actual.should.eql(buffer);
+      });
+      it("can create a four-byte (32-bit) buffer", function(){
+        var buffer = new Buffer(4);
+        buffer.writeInt32LE(5,0);
+        var actual = new BufferMaker().Int32LE(5).make();
+        actual.should.eql(buffer);
+      });
+    });
+  });
   describe("when used for big endian scenarios", function(){
+    describe("when used for non integers", function(){
+      it ("can create floats", function(){
+        var buffer = new Buffer(4);
+        buffer.writeFloatBE(0xcafebabe,0);
+        var actual = new BufferMaker().FloatBE(0xcafebabe).make();
+        actual.should.eql(buffer);
+      });
+      it ("can create doubles", function(){
+        var buffer = new Buffer(8);
+        buffer.writeDoubleBE(0xcafebabe,0);
+        var actual = new BufferMaker().DoubleBE(0xcafebabe).make();
+        actual.should.eql(buffer);
+      });
+    });
 
     describe("when used for unsigned input", function(){
       it("can create a one byte buffer", function(){
@@ -22,13 +81,6 @@ describe("BufferMaker", function(){
         var buffer = new Buffer(4);
         buffer.writeUInt32BE(5,0);
         var actual = new BufferMaker().UInt32BE(5).make();
-        actual.should.eql(buffer);
-      });
-      it("can create an eight-byte (64-bit) buffer", function(){
-        var buffer = new Buffer(8);
-        buffer.writeUInt32BE(0,0);
-        buffer.writeUInt32BE(5,4);
-        var actual = new BufferMaker().UInt64BE(5).make();
         actual.should.eql(buffer);
       });
       it ("can create a buffer from a binary string", function(){

@@ -3,48 +3,37 @@ var bignum = require('bignum');
 var BufferMaker = function(){
   this.plan = [];
 };
-BufferMaker.prototype.UInt8 = function(val){
-  this.plan.push({ type : "UInt8", value : val});
-  return this;
-};
-BufferMaker.prototype.UInt16BE = function(val){
-  this.plan.push({ type : "UInt16BE", value : val});
-  return this;
-};
 
-BufferMaker.prototype.UInt32BE = function(val){
-  this.plan.push({ type : "UInt32BE", value : val});
-  return this;
-};
+var types = {"UInt8" : { bytes : 1},
+              "Int8" : { bytes : 1},
+              "Int16BE" : { bytes : 2},
+              "Int32BE" : { bytes : 4},
+              "Int16LE" : { bytes : 2},
+              "Int32LE" : { bytes : 4},
+              "UInt16BE" : { bytes : 2},
+              "UInt32BE" : { bytes : 4},
+              "FloatLE" : { bytes : 4},
+              "DoubleLE" : { bytes: 8},
+              "FloatBE" : { bytes : 4},
+              "DoubleBE" : { bytes : 8},
+              "UInt16LE" : { bytes : 2},
+              "UInt32LE" : { bytes : 4},
+              "Int64BE" : { bytes : 8},
+              "string" : {}
+            };
 
-BufferMaker.prototype.UInt64BE = function(val){
-  this.plan.push({ type : "UInt64BE", value : bignum(val)});
-  return this;
-};
+// create methods for each type
+function addTypeMethod(type){
+  BufferMaker.prototype[type] = function(val){
+    this.plan.push({ type : type, value : val});
+    return this;
+  };
+}
 
-BufferMaker.prototype.Int8 = function(val){
-  this.plan.push({ type : "Int8", value : val});
-  return this;
-};
-BufferMaker.prototype.Int16BE = function(val){
-  this.plan.push({ type : "Int16BE", value : val});
-  return this;
-};
+for(var type in types){
+  addTypeMethod(type);
+}
 
-BufferMaker.prototype.Int32BE = function(val){
-  this.plan.push({ type : "Int32BE", value : val});
-  return this;
-};
-
-BufferMaker.prototype.Int64BE = function(val){
-  this.plan.push({ type : "Int64BE", value : bignum(val)});
-  return this;
-};
-
-BufferMaker.prototype.string = function(val){
-  this.plan.push({ type : "string", value : val});
-  return this;
-};
 
 BufferMaker.prototype.make = function(){
   var bytecount = 0;
@@ -53,37 +42,18 @@ BufferMaker.prototype.make = function(){
   var i, j = 0;
   for(i = 0; i < this.plan.length; i++){
     item = this.plan[i];
-    switch(item.type){
-      case "UInt8": bytecount += 1; break;
-      case "UInt16BE": bytecount += 2; break;
-      case "UInt32BE": bytecount += 4; break;
-      case "UInt64BE": bytecount += 8; break;
-      case "Int8": bytecount += 1; break;
-      case "Int16BE": bytecount += 2; break;
-      case "Int32BE": bytecount += 4; break;
-      case "Int64BE": bytecount += 8; break;
-      case "string": bytecount += item.value.length; break;
+    if (item.type === 'string'){
+      bytecount += item.value.length;
+    } else {
+      bytecount += types[item.type].bytes;
     }
   }
   var buffer = new Buffer(bytecount);
   for(i = 0; i < this.plan.length; i++){
     item = this.plan[i];
     switch(item.type){
-      case "UInt8": buffer.writeUInt8(item.value, offset); offset += 1; break;
-      case "UInt16BE": buffer.writeUInt16BE(item.value, offset); offset += 2; break;
-      case "UInt32BE": buffer.writeUInt32BE(item.value, offset); offset += 4; break;
-      case "UInt64BE":
-        var bit64Buffer = item.value.toBuffer({endian : "big", size : 8});
-        for(j = 0; j < bit64Buffer.length; j++){
-          buffer[offset + j] = bit64Buffer[j];
-        }
-        offset += 8;
-        break;
-      case "Int8": buffer.writeInt8(item.value, offset); offset += 1; break;
-      case "Int16BE": buffer.writeInt16BE(item.value, offset); offset += 2; break;
-      case "Int32BE": buffer.writeInt32BE(item.value, offset); offset += 4; break;
       case "Int64BE":
-        var signed64BitBuffer = item.value.toBuffer({endian : "big", size : 8});
+        var signed64BitBuffer = bignum(item.value).toBuffer({endian : "big", size : 8});
         for(j = 0; j < signed64BitBuffer.length; j++){
           buffer[offset + j] = signed64BitBuffer[j];
         }
@@ -99,6 +69,9 @@ BufferMaker.prototype.make = function(){
         }
 
         break;
+      default :
+        buffer['write' + item.type](item.value, offset);
+        offset += types[item.type].bytes;
     }
   }
   return buffer;
