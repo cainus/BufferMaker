@@ -1,6 +1,7 @@
 BufferMaker
 ===========
 [![Build Status](https://secure.travis-ci.org/cainus/BufferMaker.png?branch=master)](http://travis-ci.org/cainus/BufferMaker)
+[![Coverage Status](https://coveralls.io/repos/cainus/BufferMaker/badge.png?branch=master)](https://coveralls.io/r/cainus/BufferMaker)
 
 A convenient way of creating binary strings in node.js because Buffer is a bit too low-level for comfort in this regard.  
 
