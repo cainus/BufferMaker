@@ -131,10 +131,28 @@ describe("BufferMaker", function(){
                     .make();
       messageSet.should.eql(new Buffer([0, 0, 0, 4, 'f'.charCodeAt(0), 'o'.charCodeAt(0), 'u'.charCodeAt(0), 'r'.charCodeAt(0)]));
     });
+    // non breaking space ( \u00a0 ) uses two bytes in utf8:
+    //       http://en.wikipedia.org/wiki/UTF-8#Description
+    it ("can create a buffer from a string with some 2-byte utf8 in it", function(){
+      var expected = new Buffer("fo\u00a0ur");
+      var actual = new BufferMaker()
+                    .string("fo\u00a0ur")
+                    .make();
+      actual.should.eql(expected);
+      actual.toString('utf8').should.equal("fo\u00a0ur");
+      actual.length.should.equal(6);
+      expected.length.should.equal(6);
+    });
     it("can create a buffer from a string", function(){
       var buffer = new Buffer(8);
       buffer.write("12345678");
       var actual = new BufferMaker().string("12345678").make();
+      actual.should.eql(buffer);
+    });
+    it("can create a buffer from a weird string", function(){
+      var buffer = new Buffer(10);
+      buffer.write("1234\u00a05678");
+      var actual = new BufferMaker().string("1234\u00a05678").make();
       actual.should.eql(buffer);
     });
 
