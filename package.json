@@ -2,7 +2,7 @@
       "name": "buffermaker",
       "description" : "buffermaker is a convenient way of creating binary strings",
       "keywords" : ["buffer", "binary"],
-      "version": "0.0.10",
+      "version": "0.0.11",
       "bugs": {
        "url": "https://github.com/cainus/BufferMaker/issues"
       },
@@ -21,7 +21,7 @@
         } 
       ],
       "dependencies": {
-          "bignum" : "0.6.0"
+          "bignum" : "0.6.1"
       },
       "devDependencies" : {
           "jscoverage" : "0.3.6",
