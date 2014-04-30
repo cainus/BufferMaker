@@ -21,7 +21,7 @@
         } 
       ],
       "dependencies": {
-          "bignum" : "0.6.2"
+          "long" : "latest"
       },
       "devDependencies" : {
           "jscoverage" : "0.3.6",
