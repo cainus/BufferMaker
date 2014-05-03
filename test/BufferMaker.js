@@ -143,6 +143,19 @@ describe("BufferMaker", function(){
       actual.length.should.equal(6);
       expected.length.should.equal(6);
     });
+    // this was reported as a bug
+    it ("can properly report length of chinese strings", function(){
+      var str = '中国';
+      //console.log("str: ", str);
+      var actual = new BufferMaker().string(str).make();
+      //console.log("actual: ", actual.toString());
+
+      var expected = new Buffer(str);
+      //console.log("expected: ", expected.toString());
+      actual.should.eql(expected);
+      actual.toString('utf8').should.equal(str);
+      actual.length.should.equal(6);
+    });
     it("can create a buffer from a string", function(){
       var buffer = new Buffer(8);
       buffer.write("12345678");
