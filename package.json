@@ -17,7 +17,6 @@
     "Seth Edwards <sethaedwards@gmail.com>"
   ],
   "dependencies": {
-    "bignum": "^0.9.0",
     "long": "1.1.2"
   },
   "devDependencies": {
