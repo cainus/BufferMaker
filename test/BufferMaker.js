@@ -98,7 +98,7 @@ describe("BufferMaker", function(){
       it("can create a one byte buffer", function(){
         var buffer = new Buffer(1);
         buffer.writeInt8(5,0);
-        var actual = new BufferMaker().Int8(5).make();
+       var actual = new BufferMaker().Int8(5).make();
         actual.should.eql(buffer);
       });
       it("can create a two-byte (16-bit) buffer", function(){
@@ -119,6 +119,22 @@ describe("BufferMaker", function(){
         buffer.writeInt32BE(5,4);
         var actual = new BufferMaker().Int64BE(5).make();
         actual.should.eql(buffer);
+      });
+      it("can create an eight-byte (64-bit) buffer from a negative number", function(){
+        var actual = new BufferMaker().Int64BE(-1).make();
+        var expected = new Buffer(8);
+        for(var i = 0; i < 8; i++){
+          expected.writeUInt8(255, i);
+        }
+        actual.should.eql(expected);
+      });
+      it("can create an eight-byte (64-bit) buffer from a negative number as a string", function(){
+        var actual = new BufferMaker().Int64BE('-1').make();
+        var expected = new Buffer(8);
+        for(var i = 0; i < 8; i++){
+          expected.writeUInt8(255, i);
+        }
+        actual.should.eql(expected);
       });
     });
 
