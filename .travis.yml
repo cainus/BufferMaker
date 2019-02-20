@@ -1,6 +1,18 @@
 language: node_js
-node_js:
-  - 0.8
-  - "0.10"
-  - "0.11"
+sudo: false
+dist: precise
 
+node_js:
+  - "10"
+  - "8"
+  - "6"
+
+cache:
+  directories:
+    - node_modules
+
+script:
+  - npm test
+
+after_success:
+  - npm run coveralls
