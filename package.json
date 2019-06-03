@@ -5,7 +5,7 @@
     "buffer",
     "binary"
   ],
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "index.js",
   "files": [
     "index.js",
