@@ -2,8 +2,6 @@ BufferMaker
 ===========
 
 
-## Please note: This project is no longer maintained.
-
 [![Build Status](https://secure.travis-ci.org/cainus/BufferMaker.png?branch=master)](http://travis-ci.org/cainus/BufferMaker)
 [![Coverage Status](https://coveralls.io/repos/cainus/BufferMaker/badge.png?branch=master)](https://coveralls.io/r/cainus/BufferMaker)
 [![NPM version](https://badge.fury.io/js/buffermaker.png)](http://badge.fury.io/js/buffermaker)

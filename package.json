@@ -1,11 +1,12 @@
 {
-  "name": "buffermaker",
+  "name": "buffer-maker",
   "description": "BufferMaker is a convenient way of creating binary strings",
   "keywords": [
+    "buffermaker",
     "buffer",
     "binary"
   ],
-  "version": "1.2.1",
+  "version": "2.0.0",
   "main": "index.js",
   "files": [
     "index.js",
@@ -21,20 +22,19 @@
     "jest-cli": "^24.1.0"
   },
   "dependencies": {
-    "long": "1.1.2"
+    "long": "^4.0.0"
   },
   "maintainers": [
-    "Gregg Caines <gregg@caines.ca> (http://caines.ca)",
-    "Seth Edwards <sethaedwards@gmail.com>"
+    "Jermel Washington <buffer-maker@jermel.org> (http://jermel.org)"
   ],
   "bugs": {
-    "url": "https://github.com/cainus/BufferMaker/issues"
+    "url": "https://github.com/jermel/BufferMaker/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cainus/BufferMaker.git"
+    "url": "git://github.com/jermel/BufferMaker.git"
   },
   "author": "Gregg Caines",
   "license": "MIT",
-  "homepage": "https://github.com/cainus/BufferMaker"
+  "homepage": "https://github.com/jermel/BufferMaker"
 }
