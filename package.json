@@ -24,6 +24,9 @@
   "dependencies": {
     "long": "^4.0.0"
   },
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "maintainers": [
     "Jermel Washington <buffer-maker@jermel.org> (http://jermel.org)"
   ],
